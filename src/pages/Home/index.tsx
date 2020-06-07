@@ -1,8 +1,13 @@
 import React from 'react';
+import logo from '../../assets/logo.svg';
 
 const Home = () => {
   return(
-    <h1></h1>
+    <div id="page-home">
+      <div className="content">
+        <img src={logo} alt="Logo Ecoleta"/>
+      </div>
+    </div>
   )
 }
 
