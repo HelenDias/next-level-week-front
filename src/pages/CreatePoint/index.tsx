@@ -26,9 +26,14 @@ const CreatePoint = () => {
   const [items, setItems] = useState<Item[]>([]);
   const [cities, setCities] = useState<string[]>([]);
   const [selectedUf, setSelectedUf] = useState('0');
+  const [selectedCity, setSelectedCity] = useState('0');
 
   function handleSelectUf(event: ChangeEvent<HTMLSelectElement>) {
     return setSelectedUf(event.target.value);
+  }
+
+  function handleSelectCity(event: ChangeEvent<HTMLSelectElement>) {
+    return setSelectedCity(event.target.value);
   }
 
   useEffect(() => {
@@ -181,8 +186,10 @@ const CreatePoint = () => {
               </label>
 
               <select
-                name="city"
                 id="city"
+                name="city"
+                value={selectedCity}
+                onChange={handleSelectCity}
               >
                 <option value="0">
                   Selecione uma cidade
