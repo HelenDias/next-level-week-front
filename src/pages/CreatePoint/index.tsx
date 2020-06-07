@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
 import api from '../../services/api';
+import axios from 'axios';
 
 interface Item {
   id: number,
@@ -12,12 +13,26 @@ interface Item {
   image: string,
 };
 
+interface IbgeUfResponse {
+  sigla: string,
+};
+
 const CreatePoint = () => {
   const [items, setItems] = useState<Item[]>([]);
+  const [ufs, setUfs] = useState<string[]>([]);
 
   useEffect(() => {
     api.get('items')
       .then(response => setItems(response.data))
+      .catch(e => console.log('Erro', e));
+  }, []);
+
+  useEffect(() => {
+    axios.get<IbgeUfResponse[]>('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
+      .then((response) => {
+        const ufs = response.data.map(uf => uf.sigla)
+        return setUfs(ufs);
+      })
       .catch(e => console.log('Erro', e));
   }, []);
 
@@ -123,6 +138,17 @@ const CreatePoint = () => {
                 <option value="0">
                   Selecione um estado
                 </option>
+
+                {
+                  ufs.map(uf => (
+                    <option
+                      key={uf}
+                      value={uf}
+                    >
+                      {uf}
+                    </option>
+                  ))
+                }
               </select>
             </div>
 
@@ -158,7 +184,7 @@ const CreatePoint = () => {
             {
               items.map(item => (
                 <li key={item.id}>
-                  <img src={item.image} />
+                  <img src={item.image} alt={item.title} />
                   <span>
                     {item.title}
                   </span>
