@@ -1,14 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 
 import Header from './Header';
 
 function App() {
+  const [counter, setCounter] = useState(0); // [valor do estado, func para att]
+
+  function handleClick() {
+    setCounter(counter + 1);
+  }
+
   return (
     <div>
       <Header title="Ecoleta" />
 
-      <h1>Oi</h1>
+      <h1>{counter}</h1>
+      <button type="button" onClick={handleClick}>Clique aqui</button>
     </div>
   );
 }
