@@ -123,7 +123,7 @@ const CreatePoint = () => {
           </legend>
 
           <ul className="items-grid">
-            <li>
+            <li className="selected">
               <img src="http://localhost:4000/uploads/oleo.svg" />
               <span>Óleo de Cozinha</span>
             </li>
