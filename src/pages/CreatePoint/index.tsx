@@ -121,6 +121,33 @@ const CreatePoint = () => {
               Selecione um ou mais itens abaixo
             </span>
           </legend>
+
+          <ul className="items-grid">
+            <li>
+              <img src="http://localhost:4000/uploads/oleo.svg" />
+              <span>Óleo de Cozinha</span>
+            </li>
+            <li>
+              <img src="http://localhost:4000/uploads/oleo.svg" />
+              <span>Óleo de Cozinha</span>
+            </li>
+            <li>
+              <img src="http://localhost:4000/uploads/oleo.svg" />
+              <span>Óleo de Cozinha</span>
+            </li>
+            <li>
+              <img src="http://localhost:4000/uploads/oleo.svg" />
+              <span>Óleo de Cozinha</span>
+            </li>
+            <li>
+              <img src="http://localhost:4000/uploads/oleo.svg" />
+              <span>Óleo de Cozinha</span>
+            </li>
+            <li>
+              <img src="http://localhost:4000/uploads/oleo.svg" />
+              <span>Óleo de Cozinha</span>
+            </li>
+          </ul>
         </fieldset>
       </form>
     </div>
