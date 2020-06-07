@@ -66,6 +66,30 @@ const CreatePoint = () => {
             </div>
           </div>
         </fieldset>
+
+        <fieldset>
+          <legend>
+            <h2>
+              Endereço
+            </h2>
+
+            <span>
+              Selecione o endereço no mapa
+            </span>
+          </legend>
+        </fieldset>
+
+        <fieldset>
+          <legend>
+            <h2>
+              Itens de coleta
+            </h2>
+
+            <span>
+              Selecione um ou mais itens abaixo
+            </span>
+          </legend>
+        </fieldset>
       </form>
     </div>
   );
