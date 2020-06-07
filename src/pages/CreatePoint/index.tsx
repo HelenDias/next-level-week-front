@@ -157,10 +157,10 @@ const CreatePoint = () => {
           <ul className="items-grid">
             {
               items.map(item => (
-                <li>
-                  <img src={ item.image } />
+                <li key={item.id}>
+                  <img src={item.image} />
                   <span>
-                    { item.title }
+                    {item.title}
                   </span>
                 </li>
               ))
