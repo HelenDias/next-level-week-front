@@ -6,8 +6,14 @@ import { FiArrowLeft } from 'react-icons/fi';
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
 import api from '../../services/api';
 
+interface Item {
+  id: number,
+  title: string,
+  image: string,
+};
+
 const CreatePoint = () => {
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState<Item[]>([]);
 
   useEffect(() => {
     api.get('items')
@@ -149,30 +155,16 @@ const CreatePoint = () => {
           </legend>
 
           <ul className="items-grid">
-            <li className="selected">
-              <img src="http://localhost:4000/uploads/oleo.svg" />
-              <span>Óleo de Cozinha</span>
-            </li>
-            <li>
-              <img src="http://localhost:4000/uploads/oleo.svg" />
-              <span>Óleo de Cozinha</span>
-            </li>
-            <li>
-              <img src="http://localhost:4000/uploads/oleo.svg" />
-              <span>Óleo de Cozinha</span>
-            </li>
-            <li>
-              <img src="http://localhost:4000/uploads/oleo.svg" />
-              <span>Óleo de Cozinha</span>
-            </li>
-            <li>
-              <img src="http://localhost:4000/uploads/oleo.svg" />
-              <span>Óleo de Cozinha</span>
-            </li>
-            <li>
-              <img src="http://localhost:4000/uploads/oleo.svg" />
-              <span>Óleo de Cozinha</span>
-            </li>
+            {
+              items.map(item => (
+                <li>
+                  <img src={ item.image } />
+                  <span>
+                    { item.title }
+                  </span>
+                </li>
+              ))
+            }
           </ul>
         </fieldset>
 
