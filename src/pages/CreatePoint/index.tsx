@@ -31,6 +31,12 @@ const CreatePoint = () => {
   const [selectedPosition, setSelectedPosition] = useState<[number, number]>([0, 0]);
   const [initialPosition, setInitialPosition] = useState<[number, number]>([0, 0]);
 
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    whatsapp: '',
+  });
+
   function handleSelectUf(event: ChangeEvent<HTMLSelectElement>) {
     return setSelectedUf(event.target.value);
   }
@@ -44,6 +50,15 @@ const CreatePoint = () => {
       event.latlng.lat,
       event.latlng.lng,
     ]);
+  }
+
+  function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
+    const { name, value } = event.target;
+
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
   }
 
   useEffect(() => {
@@ -112,6 +127,7 @@ const CreatePoint = () => {
               id="name"
               type="text"
               name="name"
+              onChange={handleInputChange}
             />
           </div>
 
@@ -125,6 +141,7 @@ const CreatePoint = () => {
                 id="email"
                 type="email"
                 name="email"
+                onChange={handleInputChange}
               />
             </div>
 
@@ -137,6 +154,7 @@ const CreatePoint = () => {
                 id="whatsapp"
                 type="text"
                 name="whatsapp"
+                onChange={handleInputChange}
               />
             </div>
           </div>
