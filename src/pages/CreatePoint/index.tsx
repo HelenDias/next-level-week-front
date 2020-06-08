@@ -29,6 +29,7 @@ const CreatePoint = () => {
   const [selectedUf, setSelectedUf] = useState('0');
   const [selectedCity, setSelectedCity] = useState('0');
   const [selectedPosition, setSelectedPosition] = useState<[number, number]>([0, 0]);
+  const [initialPosition, setInitialPosition] = useState<[number, number]>([0, 0]);
 
   function handleSelectUf(event: ChangeEvent<HTMLSelectElement>) {
     return setSelectedUf(event.target.value);
@@ -44,6 +45,14 @@ const CreatePoint = () => {
       event.latlng.lng,
     ]);
   }
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(position => {
+      const { latitude, longitude } = position.coords;
+
+      setInitialPosition([latitude, longitude]);
+    });
+  }, []);
 
   useEffect(() => {
     api.get('items')
