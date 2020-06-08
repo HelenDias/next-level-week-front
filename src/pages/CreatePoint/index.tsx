@@ -1,7 +1,12 @@
-import React, { useEffect, useState, ChangeEvent, FormEvent } from 'react';
+import React, {
+  ChangeEvent,
+  FormEvent,
+  useEffect,
+  useState,
+} from 'react';
 import './styles.css';
 import logo from '../../assets/logo.svg';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
 import api from '../../services/api';
@@ -37,6 +42,40 @@ const CreatePoint = () => {
     email: '',
     whatsapp: '',
   });
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(position => {
+      const { latitude, longitude } = position.coords;
+
+      setInitialPosition([latitude, longitude]);
+    });
+  }, []);
+
+  useEffect(() => {
+    api.get('items')
+      .then(response => setItems(response.data))
+      .catch(e => console.log('Erro', e));
+  }, []);
+
+  useEffect(() => {
+    axios.get<IbgeUfResponse[]>('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
+      .then((response) => {
+        const ufs = response.data.map(uf => uf.sigla)
+        return setUfs(ufs);
+      })
+      .catch(e => console.log('Erro', e));
+  }, []);
+
+  useEffect(() => {
+    if (selectedUf === '0') return;
+
+    axios.get<IbgeCityResponse[]>(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${selectedUf}/municipios`)
+      .then((response) => {
+        const cities = response.data.map(city => city.nome)
+        return setCities(cities);
+      })
+      .catch(e => console.log('Erro', e));
+  }, [selectedUf]);
 
   function handleSelectUf(event: ChangeEvent<HTMLSelectElement>) {
     return setSelectedUf(event.target.value);
@@ -102,40 +141,6 @@ const CreatePoint = () => {
       alert(`Erro ao cadastrar ponto de coleta! [${e}]`);
     }
   }
-
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition(position => {
-      const { latitude, longitude } = position.coords;
-
-      setInitialPosition([latitude, longitude]);
-    });
-  }, []);
-
-  useEffect(() => {
-    api.get('items')
-      .then(response => setItems(response.data))
-      .catch(e => console.log('Erro', e));
-  }, []);
-
-  useEffect(() => {
-    axios.get<IbgeUfResponse[]>('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
-      .then((response) => {
-        const ufs = response.data.map(uf => uf.sigla)
-        return setUfs(ufs);
-      })
-      .catch(e => console.log('Erro', e));
-  }, []);
-
-  useEffect(() => {
-    if (selectedUf === '0') return;
-
-    axios.get<IbgeCityResponse[]>(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${selectedUf}/municipios`)
-      .then((response) => {
-        const cities = response.data.map(city => city.nome)
-        return setCities(cities);
-      })
-      .catch(e => console.log('Erro', e));
-  }, [selectedUf]);
 
   return(
     <div id="page-create-point">
