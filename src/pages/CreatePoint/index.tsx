@@ -43,6 +43,8 @@ const CreatePoint = () => {
     whatsapp: '',
   });
 
+  const history = useHistory();
+
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(position => {
       const { latitude, longitude } = position.coords;
@@ -137,6 +139,8 @@ const CreatePoint = () => {
       await api.post('points', data);
 
       alert(`Ponto de coleta ${data.name} cadastrado com sucesso!`);
+
+      return history.push('/');
     } catch (e) {
       alert(`Erro ao cadastrar ponto de coleta! [${e}]`);
     }
