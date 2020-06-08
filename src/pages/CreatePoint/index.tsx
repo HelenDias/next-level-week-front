@@ -6,6 +6,7 @@ import { FiArrowLeft } from 'react-icons/fi';
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
 import api from '../../services/api';
 import axios from 'axios';
+import { LeafletMouseEvent } from 'leaflet';
 
 interface Item {
   id: number,
@@ -27,6 +28,7 @@ const CreatePoint = () => {
   const [cities, setCities] = useState<string[]>([]);
   const [selectedUf, setSelectedUf] = useState('0');
   const [selectedCity, setSelectedCity] = useState('0');
+  const [selectedPosition, setSelectedPosition] = useState<[number, number]>([0, 0]);
 
   function handleSelectUf(event: ChangeEvent<HTMLSelectElement>) {
     return setSelectedUf(event.target.value);
@@ -34,6 +36,13 @@ const CreatePoint = () => {
 
   function handleSelectCity(event: ChangeEvent<HTMLSelectElement>) {
     return setSelectedCity(event.target.value);
+  }
+
+  function handleMapClick(event: LeafletMouseEvent) {
+    return setSelectedPosition([
+      event.latlng.lat,
+      event.latlng.lng,
+    ]);
   }
 
   useEffect(() => {
@@ -138,13 +147,14 @@ const CreatePoint = () => {
           <Map
             center={[-22.8631668, -48.4287712]}
             zoom={15}
+            onClick={handleMapClick}
           >
             <TileLayer
               attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
 
-            <Marker position={[-22.8631668, -48.4287712]}>
+            <Marker position={selectedPosition}>
               <Popup>
                 Boulevard Shopping Botucatu
               </Popup>
